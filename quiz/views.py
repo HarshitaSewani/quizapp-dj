@@ -19,7 +19,7 @@ def quiz(request):
     paginator = Paginator(obj, 1)
     try:
         page = int(request.GET.get('page', '1'))
-    except:
+    except ValueError:
         page = 1
     try:
         questions = paginator.page(page)
@@ -39,6 +39,6 @@ def result(request):
     return render(request, 'result.html', {"score": score})
 
 def saveans(request):
-    ans = request.GET('ans')
+    ans = request.GET.get('ans')
     lst.append(ans)
     return HttpResponse('Answer saved')

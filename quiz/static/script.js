@@ -1,19 +1,22 @@
-window.onload = initall;
+window.onload = function () {
+  var saveAnsButton = document.getElementById("save_ans");
+  saveAnsButton.onclick = saveans;
 
-var saveAnsButton;
+  function saveans() {
+    var form = document.getElementById("quizForm");
+    var ans = form.querySelector('input[name="name"]:checked');
 
-function initall(){
-    saveAnsButton = document.getElementById('save_ans');
-    saveAnsButton.onclick = saveans
-}
+    if (ans) {
+      alert("Answer is submitted. Click next.");
+      console.log(ans.value);
 
-function saveans(){
-    var ans = $("input:radio[name=name]:checked").val()
-    alert("Answer is submitted. Click next.")
-    
-    var req = new XMLHttpRequest();
-    var url = '/saveans?ans='+ans
-    
-    req.open("GET", url, true)
-    req.send()
-}
+      var req = new XMLHttpRequest();
+      var url = "/saveans?ans=" + encodeURIComponent(ans.value);
+
+      req.open("GET", url, true);
+      req.send();
+    } else {
+      alert("Please select an answer!");
+    }
+  }
+};
